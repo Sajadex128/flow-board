@@ -210,14 +210,24 @@
   to { transform: translateX(-50%); }
 }
 
+@keyframes hs-shimmer {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.9; }
+}
+
 .hs-float { animation: hs-float 7s ease-in-out infinite; }
+.hs-strand {
+  animation: hs-shimmer 6s ease-in-out infinite;
+  animation-delay: var(--hs-delay, 0s);
+}
 .hs-rise { animation: hs-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .hs-marquee { animation: hs-marquee 40s linear infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   .hs-float,
   .hs-rise,
-  .hs-marquee { animation: none !important; }
+  .hs-marquee,
+  .hs-strand { animation: none !important; }
 }
 
 .hs-grain {

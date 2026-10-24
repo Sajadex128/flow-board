@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeftIcon, SparkIcon } from "@/src/components/site/Icons";
+import SaffronStrands from "@/src/components/site/home/SaffronStrands";
 
 const PARTICLES = [
   { top: "18%", right: "12%", size: 6, delay: "0s" },
@@ -28,6 +29,7 @@ export default function Hero() {
         aria-hidden
       />
       <div className="hs-grain absolute inset-0 opacity-70" aria-hidden />
+      <SaffronStrands />
 
       <div className="relative mx-auto grid max-w-[1440px] items-center gap-10 px-5 pb-20 pt-32 md:px-10 lg:min-h-screen lg:grid-cols-[1.05fr_1fr] lg:gap-6 lg:pb-0 lg:pt-24">
         <div className="hs-rise order-2 max-w-2xl lg:order-1">
