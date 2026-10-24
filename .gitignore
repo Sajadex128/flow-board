@@ -41,3 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+
+# Base44 sandbox defaults (committed on purpose — placeholders only)
+!.env.base44-defaults

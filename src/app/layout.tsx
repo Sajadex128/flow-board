@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Vazirmatn } from "next/font/google";
+import { Geist, Geist_Mono, Vazirmatn } from "next/font/google";
 
 import "./globals.css";
 import { getServerSession } from "next-auth";
@@ -24,8 +23,20 @@ const vazir = Vazirmatn({
 });
 
 export const metadata: Metadata = {
-  title: "فلوبرد - مدیریت پروژه",
-  description: "سیستم مدیریت تسک‌ها و پروژه‌ها",
+  title: {
+    default: "هپی‌نس | تجربه‌ای تازه از نوشیدنی‌های زعفرانی",
+    template: "%s | هپی‌نس",
+  },
+  description:
+    "با هپی‌نس، دنیایی از نوشیدنی‌های زعفرانی و میوه‌ای را کشف کنید؛ ترکیبی از طعم‌های خاص، طراحی مدرن و الهام از زعفران ایرانی.",
+  keywords: ["هپی‌نس", "نوشیدنی زعفرانی", "نوشیدنی میوه‌ای", "زعفران", "نوشیدنی عملکردی"],
+  openGraph: {
+    title: "هپی‌نس | تجربه‌ای تازه از نوشیدنی‌های زعفرانی",
+    description:
+      "دنیایی از نوشیدنی‌های زعفرانی و میوه‌ای با الهام از زعفران ایرانی.",
+    locale: "fa_IR",
+    type: "website",
+  },
 };
 
 export default async function RootLayout({
@@ -39,7 +50,7 @@ export default async function RootLayout({
     <html
       lang="fa"
       dir="rtl"
-      className={`${geistSans.variable} ${geistMono.variable} ${vazir.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${vazir.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
       <body className={`${vazir.className} bg-background text-foreground`}>
