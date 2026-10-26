@@ -48,3 +48,6 @@ docker compose -f docker-compose.base44.yml up -d --build
   pushState's the URL without the route rendering). Drive the app's own `<Link>`s instead,
   e.g. click the header's «محصولات» / «خانه» links, or the cart icon.
 - The cart is persisted in `localStorage` under `happiness-cart-v1`.
+- Placing an order (cart → «ثبت سفارش») stores it under `happiness-orders-v1` and returns a
+  code like `HP-XXXXXX`; `/order-tracking?code=…` looks that order up. Both are client-side
+  only — no payment gateway or server order is involved.

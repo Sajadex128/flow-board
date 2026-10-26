@@ -2,12 +2,22 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { useCart } from "@/src/components/site/CartProvider";
-import { BagIcon, MinusIcon, PlusIcon, TrashIcon } from "@/src/components/site/Icons";
-import { formatToman } from "@/src/lib/format";
+import { BagIcon, CheckIcon, MinusIcon, PlusIcon, TrashIcon } from "@/src/components/site/Icons";
+import { formatJalali, formatToman } from "@/src/lib/format";
+import { placeOrder, type Order } from "@/src/lib/orders";
 
 export default function CartPage() {
   const { items, ready, subtotal, setQuantity, remove, clear } = useCart();
+  const [placed, setPlaced] = useState<Order | null>(null);
+
+  function handleCheckout() {
+    if (items.length === 0) return;
+    const order = placeOrder(items, subtotal);
+    clear();
+    setPlaced(order);
+  }
 
   if (!ready) {
     return (
@@ -36,7 +46,38 @@ export default function CartPage() {
           سبد خرید
         </h1>
 
-        {items.length === 0 ? (
+        {placed ? (
+          <div className="mt-12 rounded-3xl border border-ink/10 bg-cream px-6 py-14 text-center md:px-10">
+            <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-emerald-600 text-white">
+              <CheckIcon className="h-7 w-7" />
+            </span>
+            <p className="mt-6 text-xl font-bold text-ink">سفارش شما ثبت شد</p>
+            <p className="mt-3 text-sm text-ink/55">
+              کد سفارش را نگه دارید؛ کارشناسان برای هماهنگی پرداخت و ارسال با شما تماس می‌گیرند.
+            </p>
+            <p className="mt-6 font-mono text-2xl font-bold tracking-widest text-cherry" dir="ltr">
+              {placed.code}
+            </p>
+            <p className="mt-2 text-xs text-ink/45">
+              تاریخ ثبت: {formatJalali(new Date(placed.createdAt))} — مبلغ:{" "}
+              {formatToman(placed.total)}
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Link
+                href={`/order-tracking?code=${placed.code}`}
+                className="rounded-full bg-ink px-7 py-3.5 text-sm text-white transition-colors hover:bg-cherry"
+              >
+                پیگیری سفارش
+              </Link>
+              <Link
+                href="/products"
+                className="rounded-full border border-ink/20 px-7 py-3.5 text-sm text-ink transition-colors hover:border-ink/50"
+              >
+                ادامه خرید
+              </Link>
+            </div>
+          </div>
+        ) : items.length === 0 ? (
           <div className="mt-12 rounded-3xl border border-dashed border-ink/20 bg-cream px-6 py-20 text-center">
             <BagIcon className="mx-auto h-8 w-8 text-ink/30" />
             <p className="mt-5 text-lg font-semibold text-ink">سبد خرید شما خالی است</p>
@@ -138,13 +179,14 @@ export default function CartPage() {
 
               <button
                 type="button"
-                disabled
-                className="mt-7 w-full cursor-not-allowed rounded-full bg-ink/25 px-6 py-4 text-sm font-semibold text-white"
+                onClick={handleCheckout}
+                className="mt-7 w-full rounded-full bg-ink px-6 py-4 text-sm font-semibold text-white transition-colors hover:bg-cherry"
               >
-                پرداخت (به‌زودی)
+                ثبت سفارش
               </button>
               <p className="mt-4 text-xs leading-6 text-ink/45">
-                در این نسخه درگاه پرداخت واقعی متصل نیست و سفارش ثبت نمی‌شود.
+                پرداخت آنلاین در این نسخه فعال نیست؛ پس از ثبت سفارش، کارشناسان برای هماهنگی
+                پرداخت و ارسال با شما تماس می‌گیرند.
               </p>
 
               <div className="mt-6 flex items-center justify-between text-xs">

@@ -6,11 +6,13 @@ export default function SimplePage({
   title,
   intro,
   children,
+  showNotice = true,
 }: {
   eyebrow: string;
   title: string;
   intro?: string;
   children?: ReactNode;
+  showNotice?: boolean;
 }) {
   return (
     <div className="bg-white pb-20 pt-32">
@@ -35,19 +37,21 @@ export default function SimplePage({
           {children}
         </div>
 
-        <div className="mt-14 max-w-3xl rounded-3xl bg-cream p-8">
-          <h2 className="text-base font-bold text-ink">این صفحه در حال تکمیل است</h2>
-          <p className="mt-3 text-xs leading-7 text-ink/55">
-            محتوای این صفحه به‌صورت نمونه ایجاد شده تا هیچ لینکی به صفحه‌ای ناموجود اشاره نکند.
-            متن نهایی پس از تعیین سیاست‌های رسمی هپی‌نس جایگزین می‌شود.
-          </p>
-          <Link
-            href="/contact"
-            className="mt-6 inline-block rounded-full bg-ink px-6 py-3 text-sm text-white transition-colors hover:bg-cherry"
-          >
-            تماس با ما
-          </Link>
-        </div>
+        {showNotice && (
+          <div className="mt-14 max-w-3xl rounded-3xl bg-cream p-8">
+            <h2 className="text-base font-bold text-ink">این صفحه در حال تکمیل است</h2>
+            <p className="mt-3 text-xs leading-7 text-ink/55">
+              محتوای این صفحه به‌صورت نمونه ایجاد شده تا هیچ لینکی به صفحه‌ای ناموجود اشاره نکند.
+              متن نهایی پس از تعیین سیاست‌های رسمی هپی‌نس جایگزین می‌شود.
+            </p>
+            <Link
+              href="/contact"
+              className="mt-6 inline-block rounded-full bg-ink px-6 py-3 text-sm text-white transition-colors hover:bg-cherry"
+            >
+              تماس با ما
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
